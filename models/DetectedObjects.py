@@ -44,4 +44,29 @@ class DetectedObjects:
         
         return objects
 
+    def to_json(self):
+        json_objects = {'objects': []}
+        objects = self._objects
+        for obj in objects:
+            box_raw = [str(i) for i in list(obj.box)]
+            box = {
+                'ymin': box_raw[0],
+                'xmin': box_raw[1],
+                'ymax': box_raw[2],
+                'xmax': box_raw[3],
+            }
+            
+            json_object = {
+                'name': str(obj),
+                'box': box,
+                'score': str(obj.score),
+                'x': str(obj.x),
+                'y': str(obj.y),
+                'height': str(obj.height),
+                'width':str(obj.width)
+            }
+        
+            json_objects['objects'].append(json_object)
+
+        return json_objects
         

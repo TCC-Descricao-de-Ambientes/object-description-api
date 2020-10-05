@@ -21,13 +21,15 @@ def mobilenet():
 
     try:
         objects = SsdMobileNet(path).run()
-        response = {'body': str(objects.objects[0])}
+        status = 200
+        response = {'status': status, 'body': objects}
     except Exception as e:
-        response = {'body': e}
+        status = 500
+        response = {'status': status, 'body': e}
     finally:
         os.remove(path)
         
-    return Response(response=json.dumps(response), status=200, mimetype="application/json")
+    return Response(response=json.dumps(response), status=status, mimetype="application/json")
 
 def create_app():
     global app

@@ -96,4 +96,4 @@ class SsdMobileNet:
         )
 
         objects = DetectedObjects(boxes, scores, classes, num, self.category_index, self._path, image.shape)
-        return objects
+        return objects.to_json()
