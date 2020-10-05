@@ -28,3 +28,7 @@ def mobilenet():
         os.remove(path)
         
     return Response(response=json.dumps(response), status=200, mimetype="application/json")
+
+def create_app():
+    global app
+    return app
