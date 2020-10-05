@@ -1,5 +1,6 @@
 import uuid
 import os
+import json
 
 from flask import Flask, request, Response
 
@@ -18,12 +19,12 @@ def mobilenet():
     with open(path, "wb") as file:
         file.write(request.data)
 
-    response = SsdMobileNet(path).run()
-    
-    os.remove(path)
-    return Response(response=str(response.objects[0]), status=200, mimetype="application/json")
-
-
-def create_app():
-    global app
-    return app
+    try:
+        objects = SsdMobileNet(path).run()
+        response = {'body': str(objects.objects[0])}
+    except Exception as e:
+        response = {'body': e}
+    finally:
+        os.remove(path)
+        
+    return Response(response=json.dumps(response), status=200, mimetype="application/json")
