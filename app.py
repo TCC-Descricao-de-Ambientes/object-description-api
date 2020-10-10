@@ -16,6 +16,7 @@ def mobilenet():
     filename = f"{hex_string}.jpg"
 
     path = os.path.join("resources", filename)
+    print("Request data:", request.data)
     with open(path, "wb") as file:
         file.write(request.data)
 
@@ -25,7 +26,7 @@ def mobilenet():
         response = {"status": status, "body": objects}
     except Exception as e:
         status = 500
-        print(e)
+        print("Exception:", e)
         response = {"status": status, "body": "Internal Server Error"}
     finally:
         os.remove(path)
