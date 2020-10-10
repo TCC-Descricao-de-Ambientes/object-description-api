@@ -25,7 +25,8 @@ def mobilenet():
         response = {"status": status, "body": objects}
     except Exception as e:
         status = 500
-        response = {"status": status, "body": e}
+        print(e)
+        response = {"status": status, "body": "Internal Server Error"}
     finally:
         os.remove(path)
 
