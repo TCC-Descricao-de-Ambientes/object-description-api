@@ -1,10 +1,13 @@
 import uuid
 import os
 import json
+import atexit
+import shutil
 
-from flask import Flask, request, Response, send_from_directory
+from flask import Flask, request, Response, send_from_directory, after_this_request
 from flask.templating import render_template
 from werkzeug.utils import secure_filename
+from apscheduler.scheduler import Scheduler
 
 from models.ssd_mobilenet.SsdMobileNet import SsdMobileNet
 from models.req.Req import Req
@@ -12,17 +15,29 @@ from models.req.Req import Req
 UPLOAD_FOLDER = "uploads"
 ALLOWED_EXTENSIONS = {"jpg", "jpeg"}
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=UPLOAD_FOLDER)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
+cron = Scheduler(daemon=True)
+cron.start()
 
 @app.route("/", methods=["GET"])
-@app.route("/index", methods=["GET"])
+@app.route("/index", methods=["GET", "POST"])
 def index():
     return render_template("index.html")
 
 
-@app.route("/api/v1/mobilenet", methods=["POST"])
+
+@app.route("/about", methods=["GET", "POST"])
+def about():
+    return render_template("about.html")
+
+
+@app.route("/objective", methods=["GET", "POST"])
+def objective():
+    return render_template("objective.html")
+
+
+@app.route("/api/v1/mobilenet", methods=["GET", "POST"])
 def mobilenet():
     path = None
     hex_string = str(uuid.uuid4().hex)
@@ -67,6 +82,9 @@ def mobilenet():
             req = Req(objects=objects)
             description = req.req()
             processed = req.save()
+            path = path.replace("\\", "/")
+            processed = processed.replace("\\", "/")
+            
             return render_template(
                 "processed.html",
                 msg=description,
@@ -80,8 +98,8 @@ def mobilenet():
             response = {"status": status, "body": "Internal Server Error"}
         else:
             return render_template("500.html", msg=e)
-    finally:
-        os.remove(path)
+    
+        #os.remove(path)
 
     return Response(
         response=json.dumps(response), status=status, mimetype="application/json"
@@ -92,3 +110,14 @@ def mobilenet():
 def not_found(e):
     return render_template("404.html")
 
+
+@cron.interval_schedule(seconds=15)
+def job_function():
+    
+    for folder in os.listdir(app.config["UPLOAD_FOLDER"]):
+        if  folder != ".gitignore":
+            shutil.rmtree(os.path.join(app.config["UPLOAD_FOLDER"], folder))
+
+
+
+atexit.register(lambda: cron.shutdown(wait=False))
