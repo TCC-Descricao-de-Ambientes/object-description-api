@@ -40,12 +40,13 @@ PATH_TO_LABELS = os.path.join(
 
 
 class SsdMobileNet:
-    def __init__(self, path):
+    def __init__(self, path: str, json: bool = True):
         self._path = path
+        self._json = json
         self._load_category_index()
 
     def _load_category_index(self):
-        with open(PATH_TO_LABELS, 'r') as f:
+        with open(PATH_TO_LABELS, "r") as f:
             self.category_index = json.load(f)
 
     def _load_tensorflow(self):
@@ -95,5 +96,7 @@ class SsdMobileNet:
             feed_dict={self.image_tensor: image_expanded},
         )
 
-        objects = DetectedObjects(boxes, scores, classes, num, self.category_index, self._path, image.shape)
-        return objects.to_json()
+        objects = DetectedObjects(
+            boxes, scores, classes, num, self.category_index, self._path, image.shape
+        )
+        return objects.to_json() if self._json else objects
