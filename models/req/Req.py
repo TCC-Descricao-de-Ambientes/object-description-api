@@ -13,11 +13,13 @@ COLORS = ["#00ff00", "#ff00ff", "#00ffff", "#ff9900"]
 
 
 class Req:
-    def __init__(self, objects, precision=60.0) -> None:
+    def __init__(self, objects, precision=None) -> None:
         self._file_path = objects.path
         self._image = Image.open(objects.path)
         self._width = objects.width
         self._height = objects.height
+
+        precision = precision or 60.0
         self._precision = precision
 
         self._columns = 5
@@ -137,20 +139,20 @@ class Req:
     def _get_description():
         return {
             "x": {
-                1: "muito a esquerda",
-                2: "na esquerda",
-                3: "no centro",
-                4: "na direita",
-                5: "muito a direita",
+                1: "at far left",
+                2: "at left",
+                3: "at the center",
+                4: "at right",
+                5: "at the far right",
             },
-            "y": {1: "em cima", 2: "no centro", 3: "embaixo"},
+            "y": {1: "at the top", 2: "at the center", 3: "at the bottom"},
         }
 
     @staticmethod
     def _format_descriptions(objects):
-        single_object_str = "A imagem é composta pelo objeto {} que está {}"
+        single_object_str = "The image contains the object {} which is {}"
         multiple_objects_str = (
-            "A imagem é composta por pelo menos {} objetos que são:\n{}"
+            "The image contains {} objects which are:\n{}"
         )
 
         number_objects = len(objects)
@@ -163,12 +165,13 @@ class Req:
                 if x == y:
                     description = f"{name} {x}"
                 else:
-                    description = f"{name} {x} e {y}"
+                    description = f"{name} {x} and {y}"
 
                 multiple_objects_list.append(description)
 
             objects_str = "\n".join(multiple_objects_list)
-            return multiple_objects_str.format(number_objects, objects_str)
+            formatted_str = multiple_objects_str.format(number_objects, objects_str)
+            return formatted_str.split('\n')
 
         elif number_objects == 1:
             name = objects[0]["name"]
@@ -177,6 +180,6 @@ class Req:
             if x == y:
                 description = x
             else:
-                description = " e ".join([x, y])
+                description = " and ".join([x, y])
 
-            return single_object_str.format(name, description)
+            return [single_object_str.format(name, description)]

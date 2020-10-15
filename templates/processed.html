@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.imagesFolder{
+  width: 100%;
+  height: auto;
+}
+
+</style>
+
 <head>
     <nav class="navbar fixed-top navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,7 +57,9 @@
                     <div class="card bg-info text-white">
                         <div class="card-body">
                             <h5 class="card-title">Image Description</h5>
-                            {{msg}}
+                            {%for m in msg%} 
+                                <p>{{m}}</p> 
+                            {%endfor%} 
                         </div>
                     </div>
                 </div>
@@ -62,7 +72,7 @@
                     <div class="card-body">
                       <h5 style="color: black;" class="card-title">Original image</h5>
                       <figure>
-                        <img srcset="{{original}}">
+                        <img class="imagesFolder" srcset="{{original}}">
                       </figure>
                     </div>
                   </div>
@@ -72,7 +82,7 @@
                     <div class="card-body">
                       <h5  class="card-title">Processed image</h5>
                       <figure>
-                        <img srcset="{{processed}}">
+                        <img class="imagesFolder" srcset="{{processed}}">
                       </figure>
                     </div>
                   </div>
@@ -91,6 +101,5 @@
 
 </body>
 </html>
-
 
 
