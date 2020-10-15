@@ -1,16 +1,16 @@
-import uuid
-import os
-import json
 import atexit
+import json
+import os
 import shutil
+import uuid
 
-from flask import Flask, request, Response
+from apscheduler.scheduler import Scheduler
+from flask import Flask, Response, request
 from flask.templating import render_template
 from werkzeug.utils import secure_filename
-from apscheduler.scheduler import Scheduler
 
-from models.ssd_mobilenet.SsdMobileNet import SsdMobileNet
 from models.req.Req import Req
+from models.ssd_mobilenet.SsdMobileNet import SsdMobileNet
 
 IGNORE_FILES = (".gitignore",)
 UPLOAD_FOLDER = "uploads"
@@ -74,17 +74,21 @@ def mobilenet():
     if not path:
         return render_template("500.html", msg="No file reached the server")
 
-    precision = request.form.get('precision').strip()
-    if precision.strip() == '':
+    precision = request.form.get("precision").strip()
+    if precision.strip() == "":
         precision = None
     else:
         try:
             precision = float(precision)
             if precision < 0 or precision > 100:
-                return render_template("400.html", msg="Precision must be between 0 and 100")
+                return render_template(
+                    "400.html", msg="Precision must be between 0 and 100"
+                )
         except TypeError:
-            return render_template("400.html", msg="Precision must be a number. Use '.' for decimal points")
-    
+            return render_template(
+                "400.html", msg="Precision must be a number. Use '.' for decimal points"
+            )
+
     try:
         status = 200
         if request.data:
