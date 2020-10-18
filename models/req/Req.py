@@ -118,7 +118,7 @@ class Req:
     def save(self):
         head, tail = os.path.splitext(self._file_path)
         filename = head.split(os.sep)[-1]
-        new_head = head.replace(filename, filename + '_processed')
+        new_head = head.replace(filename, filename + "_processed")
         new_path = new_head + tail
         self.fig.savefig(new_path)
         return new_path
@@ -141,19 +141,17 @@ class Req:
             "x": {
                 1: "at far left",
                 2: "at left",
-                3: "at the center",
+                3: "horizontally at the center",
                 4: "at right",
                 5: "at the far right",
             },
-            "y": {1: "at the top", 2: "at the center", 3: "at the bottom"},
+            "y": {1: "at the top", 2: "vertically at the center", 3: "at the bottom"},
         }
 
     @staticmethod
     def _format_descriptions(objects):
         single_object_str = "The image contains the object {} which is {}"
-        multiple_objects_str = (
-            "The image contains {} objects which are:\n{}"
-        )
+        multiple_objects_str = "The image contains {} objects which are:\n{}"
 
         number_objects = len(objects)
         if number_objects > 1:
@@ -163,7 +161,7 @@ class Req:
                 x = obj["x"]
                 y = obj["y"]
                 if x == y:
-                    description = f"{name} {x}"
+                    description = f"{name} at the center of the image"
                 else:
                     description = f"{name} {x} and {y}"
 
@@ -171,14 +169,14 @@ class Req:
 
             objects_str = "\n".join(multiple_objects_list)
             formatted_str = multiple_objects_str.format(number_objects, objects_str)
-            return formatted_str.split('\n')
+            return formatted_str.split("\n")
 
         elif number_objects == 1:
             name = objects[0]["name"]
             x = objects[0]["x"]
             y = objects[0]["y"]
             if x == y:
-                description = x
+                description = "at the center of the image"
             else:
                 description = " and ".join([x, y])
 
