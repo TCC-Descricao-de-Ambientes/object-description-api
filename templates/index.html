@@ -68,7 +68,7 @@
 
 </head>
 <body style="background-color: #343a40;">
-  
+    
     <div class="card bg-dark text-white">
       <img style="opacity: 0.2;" class="card-img" src="https://miro.medium.com/max/900/1*EYtn2YE7b6MTzMQyD2R3nA.jpeg" alt="Card image">
       <div class="card-img-overlay">
@@ -84,6 +84,7 @@
         <br>
         <br>
         <br>
+        
           <div style="text-align: center;" class="card-group">
             <div class="card text-white bg-dark mb-3">
               <div class="card-body">
@@ -93,11 +94,16 @@
                     
                     <label for="upload_image">Select a file:</label>
                     
-                    <input style="text-align: center;" class="form-control-file" type="file" name="upload_image" accept=".jpg, .jpeg">
-                    <input style="text-align: center;" class="form-control-file" type="number" name="precision" step=".01">
-                    <small style="color: white">The image must be from an internal environment to be processed.</small>
+                    <input style="text-align: center;" class="form- -file" type="file" name="upload_image" accept=".jpg, .jpeg">
+                    
                     <br>
                     <br>
+
+                    <label for="precision">Select a minimum precision (default: 60%):</label>
+                    <input style="text-align: center;" class="form- -file" type="number" name="precision" step=".01", value=60>
+                    
+                    <br>
+                    <small style="color: white">The image must be from an indoor environment to be processed.</small>
                     <br>
                     <br>
                     <!--input class="btn btn-success" type="submit"-->
@@ -148,7 +154,11 @@
       }); 
     });
 
+    window.onbeforeunload = function(){
+      $("#myModal").hide();
+    };
   </script>
+  
 
 </body>
 </html>

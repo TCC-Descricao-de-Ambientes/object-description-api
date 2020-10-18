@@ -16,6 +16,8 @@ IGNORE_FILES = (".gitignore",)
 UPLOAD_FOLDER = "uploads"
 ALLOWED_EXTENSIONS = {"jpg", "jpeg"}
 
+NO_OBJECT_MESSAGE = ["No object was found"]
+
 app = Flask(__name__, static_folder=UPLOAD_FOLDER)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
@@ -57,6 +59,13 @@ def mobilenet():
 
             path = os.path.join(folder, filename)
             file.save(path)
+        else:
+            allowed = ", ".join(list(ALLOWED_EXTENSIONS)[:-1])
+            allowed_last = list(ALLOWED_EXTENSIONS)[-1]
+            return render_template(
+                "400.html",
+                msg=f"Allowed Extensions: {allowed} and {allowed_last}",
+            )
 
     elif request.data:
         filename = hex_string + ".jpg"
@@ -102,7 +111,7 @@ def mobilenet():
         else:
             objects = SsdMobileNet(path, json=False).run()
             req = Req(objects, precision)
-            description = req.req()
+            description = req.req() or NO_OBJECT_MESSAGE
             processed = req.save()
             r = render_template(
                 "processed.html",
@@ -131,7 +140,7 @@ def not_found(e):
     return render_template("404.html")
 
 
-@cron.interval_schedule(minutes=10)
+@cron.interval_schedule(minutes=100)
 def job_function():
     for folder in os.listdir(app.config["UPLOAD_FOLDER"]):
         if folder not in IGNORE_FILES:
