@@ -95,7 +95,7 @@ class SsdMobileNet:
             ],
             feed_dict={self.image_tensor: image_expanded},
         )
-
+        self.sess.close()
         objects = DetectedObjects(
             boxes, scores, classes, num, self.category_index, self._path, image.shape
         )
