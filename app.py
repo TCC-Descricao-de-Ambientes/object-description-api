@@ -149,3 +149,4 @@ def job_function():
 
 
 atexit.register(lambda: cron.shutdown(wait=False))
+
