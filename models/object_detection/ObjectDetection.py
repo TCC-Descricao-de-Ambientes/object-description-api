@@ -39,7 +39,7 @@ PATH_TO_LABELS = os.path.join(
 )
 
 
-class SsdMobileNet:
+class ObjectDetection:
     def __init__(self, path: str, json: bool = True):
         self._path = path
         self._json = json

@@ -10,7 +10,7 @@ from flask.templating import render_template
 from werkzeug.utils import secure_filename
 
 from models.req.Req import Req
-from models.ssd_mobilenet.SsdMobileNet import SsdMobileNet
+from models.object_detection.ObjectDetection import ObjectDetection
 
 IGNORE_FILES = (".gitignore",)
 UPLOAD_FOLDER = "uploads"
@@ -41,8 +41,8 @@ def objective():
     return render_template("objective.html")
 
 
-@app.route("/api/v1/mobilenet", methods=["GET", "POST"])
-def mobilenet():
+@app.route("/api/v1/detection", methods=["GET", "POST"])
+def object_detection():
     path = None
     hex_string = str(uuid.uuid4().hex)
     if "upload_image" in request.files:
@@ -101,7 +101,7 @@ def mobilenet():
     try:
         status = 200
         if request.data:
-            objects = SsdMobileNet(path).run()
+            objects = ObjectDetection(path).run()
             response = {"status": status, "body": objects}
             r = Response(
                 response=json.dumps(response),
@@ -109,7 +109,7 @@ def mobilenet():
                 mimetype="application/json",
             )
         else:
-            objects = SsdMobileNet(path, json=False).run()
+            objects = ObjectDetection(path, json=False).run()
             req = Req(objects, precision)
             description = req.req() or NO_OBJECT_MESSAGE
             processed = req.save()
@@ -140,7 +140,7 @@ def not_found(e):
     return render_template("404.html")
 
 
-@cron.interval_schedule(minutes=100)
+@cron.interval_schedule(minutes=10)
 def job_function():
     for folder in os.listdir(app.config["UPLOAD_FOLDER"]):
         if folder not in IGNORE_FILES:

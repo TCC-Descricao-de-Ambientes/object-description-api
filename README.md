@@ -1,1 +1,1 @@
-# SSD MobileNet API
+# Object Detection API

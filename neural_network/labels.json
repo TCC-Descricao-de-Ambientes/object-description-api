@@ -1,7 +1,7 @@
 {
     "1": {
         "id": 1,
-        "name": "person"
+        "name": "bed"
     },
     "2": {
         "id": 2,
@@ -9,47 +9,47 @@
     },
     "3": {
         "id": 3,
-        "name": "dog"
+        "name": "chair"
     },
     "4": {
         "id": 4,
-        "name": "chair"
+        "name": "couch"
     },
     "5": {
         "id": 5,
-        "name": "couch"
+        "name": "dining table"
     },
     "6": {
         "id": 6,
-        "name": "potted plant"
+        "name": "dog"
     },
     "7": {
         "id": 7,
-        "name": "bed"
+        "name": "laptop"
     },
     "8": {
         "id": 8,
-        "name": "dining table"
+        "name": "microwave"
     },
     "9": {
         "id": 9,
-        "name": "toilet"
+        "name": "oven"
     },
     "10": {
         "id": 10,
-        "name": "tv"
+        "name": "person"
     },
     "11": {
         "id": 11,
-        "name": "laptop"
+        "name": "potted plant"
     },
     "12": {
         "id": 12,
-        "name": "microwave"
+        "name": "refrigerator"
     },
     "13": {
         "id": 13,
-        "name": "oven"
+        "name": "sink"
     },
     "14": {
         "id": 14,
@@ -57,26 +57,10 @@
     },
     "15": {
         "id": 15,
-        "name": "sink"
+        "name": "toilet"
     },
     "16": {
         "id": 16,
-        "name": "refrigerator"
-    },
-    "17": {
-        "id": 17,
-        "name": "clock"
-    },
-    "18": {
-        "id": 18,
-        "name": "vase"
-    },
-    "19": {
-        "id": 19,
-        "name": "teddy bear"
-    },
-    "20": {
-        "id": 20,
-        "name": "hair drier"
+        "name": "tv"
     }
 }
