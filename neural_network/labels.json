@@ -1,66 +1,62 @@
 {
     "1": {
         "id": 1,
-        "name": "bed"
+        "name": "pessoa"
     },
     "2": {
         "id": 2,
-        "name": "cat"
+        "name": "gato"
     },
     "3": {
         "id": 3,
-        "name": "chair"
+        "name": "cachorro"
     },
     "4": {
         "id": 4,
-        "name": "couch"
+        "name": "cadeira"
     },
     "5": {
         "id": 5,
-        "name": "dining table"
+        "name": "sofa"
     },
     "6": {
         "id": 6,
-        "name": "dog"
+        "name": "vaso de planta"
     },
     "7": {
         "id": 7,
-        "name": "laptop"
+        "name": "cama"
     },
     "8": {
         "id": 8,
-        "name": "microwave"
+        "name": "mesa de jantar"
     },
     "9": {
         "id": 9,
-        "name": "oven"
+        "name": "privada"
     },
     "10": {
         "id": 10,
-        "name": "person"
+        "name": "televisao"
     },
     "11": {
         "id": 11,
-        "name": "potted plant"
+        "name": "laptop"
     },
     "12": {
         "id": 12,
-        "name": "refrigerator"
+        "name": "micro-ondas"
     },
     "13": {
         "id": 13,
-        "name": "sink"
+        "name": "fogao"
     },
     "14": {
         "id": 14,
-        "name": "toaster"
+        "name": "pia"
     },
     "15": {
         "id": 15,
-        "name": "toilet"
-    },
-    "16": {
-        "id": 16,
-        "name": "tv"
+        "name": "geladeira"
     }
 }
