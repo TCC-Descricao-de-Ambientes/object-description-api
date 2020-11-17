@@ -59,6 +59,7 @@ def object_detection():
 
             path = os.path.join(folder, filename)
             file.save(path)
+            precision = request.form.get("precision").strip()
         else:
             allowed = ", ".join(list(ALLOWED_EXTENSIONS)[:-1])
             allowed_last = list(ALLOWED_EXTENSIONS)[-1]
@@ -76,6 +77,8 @@ def object_detection():
         path = os.path.join(folder, filename)
         with open(path, "wb") as file:
             file.write(request.data)
+        
+        precision = "70.0"
 
     else:
         return render_template("400.html", msg="File not uploaded")
@@ -83,7 +86,7 @@ def object_detection():
     if not path:
         return render_template("500.html", msg="No file reached the server")
 
-    precision = request.form.get("precision").strip()
+    
     if precision.strip() == "":
         precision = None
     else:
